@@ -1,8 +1,8 @@
 #ifndef TEST_H
 #define TEST_H
 
-namespace test {
-    void test();
+namespace Core {
+    void core();
 }
 
 #endif // !TEST_H

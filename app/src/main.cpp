@@ -1,6 +1,6 @@
-#include "../../core/src/test.h"
+#include "Core.h"
 
 int main() {
-    test::test();
+    Core::core();
     return 0;
 }

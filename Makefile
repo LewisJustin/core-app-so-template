@@ -1,7 +1,7 @@
 # Makefile
 
 # SOURCES (core and app/src prefix omitted)
-CORE_SOURCES = test.cpp
+CORE_SOURCES = Core/core.cpp
 APP_SOURCES = main.cpp
 
 # DEPENDENCIES
@@ -44,8 +44,13 @@ $(CORE_OUT): $(addprefix $(CORE_DIR)/,$(CORE_OBJS))
 	@mkdir -p $(BUILD_DIR)
 	$(LINK) -shared -o $@ $^ $(CORE_LIBS)
 
+
+# special instructions for compiler | core object files
+$(APP_DIR)/%.o: $(APP_DIR)/%.cpp
+	$(GCC) $(CFLAGS) -c -fPIC -o $@ $^ -I$(CORE_DIR)
+
 # special instructions for compiler | app linking
 $(APP_OUT): $(addprefix $(APP_DIR)/,$(APP_OBJS))
-	$(LINK) $(CFLAGS) -o $@ $^ -L$(BUILD_DIR) -lcore -Wl,-rpath,'$$ORIGIN/../'$(BUILD_DIR)
+	$(LINK) $(CFLAGS) -o $@ $^ -L$(BUILD_DIR) -lcore -Wl,-rpath,'$$ORIGIN/../'$(BUILD_DIR) -I$(CORE_DIR)
 
 .PHONY: clean
